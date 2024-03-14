@@ -1,0 +1,3 @@
+# Project TkMerge
+
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?logo=github&logoColor=bacb28&labelColor=30363d&color=bacb28&style=for-the-badge)](https://github.com/Vulunta/tkmerge/blob/master/License.md) [![Downloads](https://img.shields.io/github/downloads/Vulunta/tkmerge/total?label=downloads&logo=github&logoColor=5071d3&labelColor=30363d&color=5071d3&style=for-the-badge)](https://github.com/Vulunta/tkmerge/releases) [![Latest](https://img.shields.io/github/v/tag/Vulunta/tkmerge?label=Release&logo=github&logoColor=dc9191&color=dc9191&labelColor=30363d&style=for-the-badge)](https://github.com/Vulunta/tkmerge/releases/latest)
