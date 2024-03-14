@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "TkMerger.Browser.dll",
   "resources": {
-    "hash": "sha256-NNVc/c8PcisGwdDKc887lUz2kc8zDSONKfHX68+8Qak=",
+    "hash": "sha256-s4UCTGOgqcLGm5DvDdjJdysuvTVla/8UOUSaqkxNPec=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-6Kcrd3f86xbSSYX1Ga3elbzVIl8ltLXnFtSebg4o6Bo="
     },
@@ -56,9 +56,9 @@
       "System.Private.Uri.wasm": "sha256-sTJWibr+OItG9ilYukeQLjWYJAFsxiEO/ZRTJtI9XEM=",
       "System.Runtime.InteropServices.JavaScript.wasm": "sha256-4EqrbRyZJk5UWctj4yGf4GPWB4t/Dttvl9Sor2gADhk=",
       "System.Text.RegularExpressions.wasm": "sha256-JcmHf6VsU0w41Qh2nU6lPb8T/Bk2ewabfStEB+/00kQ=",
-      "TkMerger.Browser.wasm": "sha256-y5cb0mk5UHG6fOs2BxWe4ep2sMq9k989nTN9hAPhuo0=",
-      "TkMerger.Core.wasm": "sha256-nYnGnz//kJXSWr7vSCSMn0B7zV6kN+5CTXyRn6NqyDk=",
-      "TkMerger.wasm": "sha256-Swsmlcu6o0y7XGN+B6h4EQNF5PIIscyV3ej/6k0QkCY="
+      "TkMerger.Browser.wasm": "sha256-U67WSHrglnPTy4RK99meRbw8JWH8rlt7LY7/cTtYXF8=",
+      "TkMerger.Core.wasm": "sha256-VWkIhCuz+ci16ho9Hho5IKm2Fh4ouzsnLuPWfAWbx64=",
+      "TkMerger.wasm": "sha256-E1faYqJliJelbeppTB0QhpLICyLXE8sPqAhvg4ztGN0="
     },
     "vfs": {
       "runtimeconfig.bin": {
