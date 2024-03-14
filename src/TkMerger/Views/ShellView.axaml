@@ -18,11 +18,5 @@
                     Command="{Binding SaveCommand}"
                     Content="Download / Save" />
         </Grid>
-
-        <Grid Grid.Row="1">
-            <ComboBox Margin="5"
-                      ItemsSource="{Binding Modes}"
-                      SelectedItem="{Binding Mode}" />
-        </Grid>
     </Grid>
 </UserControl>

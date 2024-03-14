@@ -4,23 +4,10 @@ using TkMerger.Core.IO;
 
 namespace TkMerger.ViewModels;
 
-public enum Mode
-{
-    BYML,
-    MSBT,
-    SARC
-}
-
 public partial class ShellViewModel : ObservableObject
 {
     [ObservableProperty]
     private string _target = string.Empty;
-
-    [ObservableProperty]
-    private Mode _mode = Mode.BYML;
-
-    [ObservableProperty]
-    private Mode[] _modes = Enum.GetValues<Mode>();
 
     [RelayCommand]
     private async Task Save()
