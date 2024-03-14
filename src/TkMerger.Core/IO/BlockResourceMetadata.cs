@@ -4,22 +4,30 @@ namespace TkMerger.Core.IO;
 
 public static class BlockResourceMetadata
 {
-    private static readonly string _blockInfoPath = Path.Combine("Resources", "~meta");
+    private static bool _isLoaded = false;
 
     public static readonly Dictionary<ulong, BlockResourceMetadataEntry> Entries = [];
 
-    static BlockResourceMetadata()
+    public static async Task Load()
     {
-        using FileStream fs = File.OpenRead(_blockInfoPath);
-        while (fs.Position < fs.Length) {
-            ulong hash = fs.Read<ulong>();
+        if (_isLoaded) {
+            return;
+        }
+
+        using Stream stream = await DataResolver.Shared.GetResource("__meta__");
+        while (stream.Position < stream.Length) {
+            ulong hash = stream.Read<ulong>();
             BlockResourceMetadataEntry entry = new() {
-                BlockId = fs.Read<ulong>(),
-                Offset = fs.Read<long>(),
-                Size = fs.Read<int>()
+                BlockId = stream.Read<ulong>(),
+                Offset = stream.Read<long>(),
+                Size = stream.Read<int>()
             };
 
             Entries.Add(hash, entry);
         }
+
+        _isLoaded = true;
+
+        await Console.Out.WriteLineAsync(Entries.Count.ToString());
     }
 }

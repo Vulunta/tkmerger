@@ -1,37 +1,45 @@
-﻿using CommunityToolkit.HighPerformance.Buffers;
-using Standart.Hash.xxHash;
+﻿using Standart.Hash.xxHash;
+using System.Buffers;
 using System.Runtime.InteropServices;
 
 namespace TkMerger.Core.IO;
 
-public readonly ref struct BlockResource
+public class BlockResource : IDisposable
 {
-    private readonly SpanOwner<byte> _owner;
+    private readonly byte[] _buffer;
+    private readonly int _size;
 
-    public readonly Span<byte> Data => _owner.Span;
-
-    public BlockResource(ReadOnlySpan<char> resourceName)
+    private BlockResource(byte[] buffer, int size)
     {
-        ReadOnlySpan<byte> utf8 = MemoryMarshal.Cast<char, byte>(resourceName);
-        ulong hash = xxHash64.ComputeHash(utf8, utf8.Length);
-        BlockResourceMetadataEntry metadata = BlockResourceMetadata.Entries[hash];
-
-        string blockFile = Path.Combine("Resources", metadata.BlockId.ToString());
-        if (!File.Exists(blockFile)) {
-            throw new FileNotFoundException($"""
-                The block file '{metadata.BlockId}' could not be found.
-                """);
-        }
-
-        _owner = SpanOwner<byte>.Allocate(metadata.Size);
-
-        using FileStream fs = File.OpenRead(blockFile);
-        fs.Seek(metadata.Offset, SeekOrigin.Begin);
-        fs.Read(_owner.Span);
+        _buffer = buffer;
+        _size = size;
     }
 
-    public readonly void Dispose()
+    public static async Task<BlockResource> Open(string resourceName)
     {
-        _owner.Dispose();
+        BlockResourceMetadataEntry metadata = BlockResourceMetadata.Entries[GetKey(resourceName)];
+        Stream stream = await DataResolver.Shared.GetResource(metadata.BlockId.ToString());
+
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(metadata.Size);
+        stream.Seek(metadata.Offset, SeekOrigin.Begin);
+        stream.Read(buffer.AsSpan()[..metadata.Size]);
+        return new(buffer, metadata.Size);
+    }
+
+    public Span<byte> GetData()
+    {
+        return _buffer.AsSpan()[.._size];
+    }
+
+    private static ulong GetKey(ReadOnlySpan<char> resourceName)
+    {
+        ReadOnlySpan<byte> utf8 = MemoryMarshal.Cast<char, byte>(resourceName);
+        return xxHash64.ComputeHash(utf8, utf8.Length);
+    }
+
+    public void Dispose()
+    {
+        ArrayPool<byte>.Shared.Return(_buffer);
+        GC.SuppressFinalize(this);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Avalonia;
+using TkMerger.Core.IO;
+using TkMerger.Desktop.IO;
 
 namespace TkMerger.Desktop;
 
@@ -6,13 +8,15 @@ class Program
 {
     [STAThread]
     public static void Main(string[] args)
-        => BuildAvaloniaApp()
-        .StartWithClassicDesktopLifetime(args);
+    {
+        DataResolver.Shared = new DesktopDataResolver();
+
+        BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
+    }
 
     public static AppBuilder BuildAvaloniaApp()
-    {
-        return AppBuilder.Configure<App>()
+        => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont();
-    }
 }

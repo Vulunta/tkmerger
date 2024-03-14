@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.IO;
 using TkMerger.Core.IO;
 
 namespace TkMerger.ViewModels;
@@ -25,16 +23,15 @@ public partial class ShellViewModel : ObservableObject
     private Mode[] _modes = Enum.GetValues<Mode>();
 
     [RelayCommand]
-    private void Save()
+    private async Task Save()
     {
-        using BlockResource resource = new(Target);
-
-        string output = Path.Combine("D:", "bin", "BlockResource", Target);
-        if (Path.GetDirectoryName(output) is string folder) {
-            Directory.CreateDirectory(folder);
+        try {
+            using BlockResource resource = await BlockResource.Open(Target);
+            string output = Path.Combine("D:", "bin", "BlockResource", Target);
+            DataResolver.Shared.WriteBytes(output, resource.GetData());
         }
-
-        using FileStream fs = File.Create(output);
-        fs.Write(resource.Data);
+        catch (Exception ex) {
+            Console.WriteLine(ex);
+        }
     }
 }
