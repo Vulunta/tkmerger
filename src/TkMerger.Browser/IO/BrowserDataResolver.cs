@@ -6,7 +6,11 @@ namespace TkMerger.Browser.IO;
 public partial class BrowserDataResolver : DataResolver
 {
     private static readonly HttpClient _client = new() {
+#if DEBUG
         BaseAddress = new Uri("https://localhost:5001/")
+#else
+        BaseAddress = new Uri("https://vulunta.github.io/tkmerger/")
+#endif
     };
 
     [JSImport("download", "tkmerger/downloader.js")]
