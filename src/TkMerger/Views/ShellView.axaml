@@ -1,0 +1,28 @@
+<UserControl x:Class="TkMerger.Views.ShellView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:TkMerger.ViewModels"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="vm:ShellViewModel"
+             mc:Ignorable="d">
+    <Grid Margin="25"
+          VerticalAlignment="Top"
+          RowDefinitions="Auto,Auto">
+        <Grid ColumnDefinitions="*,Auto">
+            <TextBox Margin="5" Text="{Binding Target}" />
+            <Button Grid.Column="1"
+                    Margin="5"
+                    Command="{Binding SaveCommand}"
+                    Content="Download / Save" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <ComboBox Margin="5"
+                      ItemsSource="{Binding Modes}"
+                      SelectedItem="{Binding Mode}" />
+        </Grid>
+    </Grid>
+</UserControl>
