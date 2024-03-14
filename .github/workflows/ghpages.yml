@@ -27,35 +27,35 @@ jobs:
       run: dotnet publish src/TkMerger.Browser/TkMerger.Browser.csproj -c Release -o release --nologo
 
     - name: Brotli Compress Output (dll)
-      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0-browser/browser-wasm/AppBundle/managed -p '*.dll' --format br --threads 4
+      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/managed -p '*.dll' --format br --threads 4
 
     - name: Brotli Compress Output (js)
-      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0-browser/browser-wasm/AppBundle/ -p '*.js' --format br --threads 4
+      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/ -p '*.js' --format br --threads 4
 
     - name: Brotli Compress Output (wasm)
-      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0-browser/browser-wasm/AppBundle/ -p '*.wasm' --format br --threads 4
+      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/ -p '*.wasm' --format br --threads 4
 
     - name: GZip Compress Output (dll)
-      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0-browser/browser-wasm/AppBundle/managed -p '*.dll' --format gz --threads 4
+      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/managed -p '*.dll' --format gz --threads 4
 
     - name: GZip Compress Output (js)
-      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0-browser/browser-wasm/AppBundle/ -p '*.js' --format gz --threads 4
+      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/ -p '*.js' --format gz --threads 4
 
     - name: GZip Compress Output (wasm)
-      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0-browser/browser-wasm/AppBundle/ -p '*.wasm' --format gz --threads 4
+      run: DotNetCompress -d src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/ -p '*.wasm' --format gz --threads 4
 
     - name: Change base-tag in index.html from / to TkMerger
-      run: sed -i 's/<base href="\/" \/>/<base href="\/tkmerger\/" \/>/g' src/TkMerger.Browser/bin/Release/net8.0-browser/browser-wasm/AppBundle/index.html
+      run: sed -i 's/<base href="\/" \/>/<base href="\/tkmerger\/" \/>/g' src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/index.html
 
     - name: copy index.html to 404.html
-      run: cp src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/index.html src/TkMerger.Browser/bin/Release/net8.0-browser/browser-wasm/AppBundle/404.html
+      run: cp src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/index.html src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/404.html
 
     - name: Add .nojekyll file
-      run: touch src/TkMerger.Browser/bin/Release/net8.0-browser/browser-wasm/AppBundle/.nojekyll
+      run: touch src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle/.nojekyll
 
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@4.1.7
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: src/TkMerger.Browser/bin/Release/net8.0-browser/browser-wasm/AppBundle
+        FOLDER: src/TkMerger.Browser/bin/Release/net8.0/browser-wasm/AppBundle
